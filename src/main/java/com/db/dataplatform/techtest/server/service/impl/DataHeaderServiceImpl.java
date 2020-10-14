@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static java.util.Objects.isNull;
-
 @Service
 @RequiredArgsConstructor
 public class DataHeaderServiceImpl implements com.db.dataplatform.techtest.server.service.DataHeaderService {
@@ -22,7 +20,7 @@ public class DataHeaderServiceImpl implements com.db.dataplatform.techtest.serve
 
     @Override
     public Optional<DataHeaderEntity> getDataByBlockName(String blockName) {
-        DataHeaderEntity dataHeaderEntity=dataHeaderRepository.findByBlockName1(blockName);
+        DataHeaderEntity dataHeaderEntity=dataHeaderRepository.findByBlockName(blockName);
         return Optional.ofNullable(dataHeaderEntity);
     }
 

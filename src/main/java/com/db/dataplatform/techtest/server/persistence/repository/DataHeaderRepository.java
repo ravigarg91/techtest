@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface DataHeaderRepository extends JpaRepository<DataHeaderEntity, Long> {
     
     @Query(value = "SELECT h.* FROM DATA_HEADER h where h.NAME=:blockName", nativeQuery = true)
-    DataHeaderEntity findByBlockName1(@Param("blockName") String blockName);
+    DataHeaderEntity findByBlockName(@Param("blockName") String blockName);
 
 }

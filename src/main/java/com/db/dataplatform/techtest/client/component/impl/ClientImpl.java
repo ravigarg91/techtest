@@ -39,7 +39,8 @@ public class ClientImpl implements Client {
 
     @Override
     public void pushData(DataEnvelope dataEnvelope) {
-        restTemplate.postForObject(URI_PUSHDATA, dataEnvelope,DataEnvelope.class);
+        Boolean valueFromServer= restTemplate.postForObject(URI_PUSHDATA, dataEnvelope,Boolean.class);
+        log.info("Got from server {}",valueFromServer);
         log.info("Pushing data {} to {}", dataEnvelope.getDataHeader().getName(), URI_PUSHDATA);
     }
 

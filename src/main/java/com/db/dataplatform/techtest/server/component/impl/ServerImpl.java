@@ -10,6 +10,7 @@ import com.db.dataplatform.techtest.server.persistence.model.DataHeaderEntity;
 import com.db.dataplatform.techtest.server.service.DataBodyService;
 import com.db.dataplatform.techtest.server.component.Server;
 import com.db.dataplatform.techtest.server.service.DataHeaderService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -52,28 +53,22 @@ public class ServerImpl implements Server {
             // Save to persistence.
             persist(envelope);
             log.info("Data persisted successfully, data name: {}", envelope.getDataHeader().getName());
-            pushDataToHadoop(envelope.toString());
             return true;
         }
         return false;
     }
 
-    @Async
-    public CompletableFuture pushDataToHadoop(String payload) {
-        log.info("Pushing Data to Hadoop");
-        String url = String.format("http://localhost:8092/hadoopserver/pushbigdata");
-        String result = restTemplate.postForObject(url, payload, String.class);
-        return CompletableFuture.completedFuture(result);
-    }
+
 
     @Override
     public DataEnvelope findByBlockType(String blockType) {
         log.info("Getting data by BlockType {}" ,blockType);
         DataBodyEntity dataEntity=dataBodyServiceImpl.getDataByBlockType(Enum.valueOf(BlockTypeEnum.class, blockType));
+        if(dataEntity!=null){
         DataBody dataBody = DataBody.builder().dataBody(dataEntity.getDataBody()).build();
         DataEnvelope dataEnvelope = DataEnvelope.builder().dataBody(dataBody).build();
-        //List<DataEnvelope> dataEnvelopes = dataBodies.stream().map(dataBody -> DataEnvelope.builder().databody(dataBody).build()).collect(Collectors.toList());
-        return dataEnvelope;
+        return dataEnvelope;}
+        return null;
     }
 
     @Override

@@ -48,6 +48,6 @@ public class DataBodyEntityTests {
         dataHeaderEntity2.setCreatedTimestamp(Instant.now().plusSeconds(100L));
         DataBodyEntity dataBodyEntity2 = createTestDataBodyEntity(dataHeaderEntity2);
 
-        assertThat(dataBodyEntity1).isEqualTo(dataBodyEntity2);
+        assertThat(dataBodyEntity1.getDataBody()).isEqualTo(dataBodyEntity2.getDataBody());
     }
 }
